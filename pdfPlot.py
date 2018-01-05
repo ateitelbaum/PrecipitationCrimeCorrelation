@@ -1,7 +1,8 @@
 #creates a double bar graph of average weekly violent crime rate during dry weather and precipitation
 
 #!/usr/bin/env python3
-
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import random
 import math
@@ -9,8 +10,6 @@ import numpy as np
 
 fig, ax = plt.subplots()
 def plot(crimes, dryMeans, precipMeans):
-    # create a figure instance that will later be written to a PDF
-    f = plt.figure()
     N = 8
     ind = np.arange(N)+2  # the x locations for the groups
     width = 0.35        # the width of the bars
