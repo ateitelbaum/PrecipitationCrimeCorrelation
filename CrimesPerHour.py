@@ -1,18 +1,22 @@
+#generates date and hour, dictionary of violent crime counts 
+
 #!/usr/bin/env python
 import re
 def crimesPerHour():
     input_file = "ComplaintData.txt"
+
     violentCrimeRegex = "Robbery|Harrassment|Assault|Rape|Arson|Murder|Kidnapping"
     violentCrimeRegex = re.compile(violentCrimeRegex.upper())
-    f = open(input_file)
+    
     day = ''
     hour = ''
     crimeCount = {}
-    
 
+    f = open(input_file)
     for line in f:
-        #field0 = date and time, field1 = crime 
+        #field0 = date and time, field1 = time, field2 = crime 
         fields = line. split('|')
+        #extracts only the hour 
         fields[1] = fields[1][:2]
 
         #if theres a new day/hour combo
@@ -29,16 +33,15 @@ def crimesPerHour():
         violentCrime = re.search(violentCrimeRegex, fields[2])
         if violentCrime:
             crime = violentCrime.group(0).lower()
+            #checks if the dictionary has a value for that crime yet
             if crime in crimeCount:
                 crimeCount[crime]+=1
             else:
                 crimeCount[crime] = 1
+    #takes care of the lastline
     yield day + ' '+ hour, crimeCount
+    f.close()
 
-if __name__ == "__main__":
-    x = list(crimesPerHour())
-    for i in x:
-        print(i)
 
 
         
